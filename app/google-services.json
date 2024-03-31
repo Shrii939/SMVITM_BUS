@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473526613282",
+    "project_id": "test2-fdc60",
+    "storage_bucket": "test2-fdc60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473526613282:android:640477a805c06c876da17b",
+        "android_client_info": {
+          "package_name": "com.example.test2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDze3EPSEbsnSlSAZp4FWDI-a9C7mY6q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

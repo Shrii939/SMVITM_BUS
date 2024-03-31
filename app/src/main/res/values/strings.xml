@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">test2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="AdminHome">Hello AdminHome fragment</string>
+    <string name="AdminAdd">Hello AdminAdd fragment</string>
+    <string name="AdminProfile">Hello AdminProfile fragment</string>
+
+    <string name="UserHome">Hello UserHome fragment</string>
+    <string name="UserProfile">Hello UserProfile fragment</string>
+    <string name="isadmin">isAdmin</string>
+
+
+</resources>
