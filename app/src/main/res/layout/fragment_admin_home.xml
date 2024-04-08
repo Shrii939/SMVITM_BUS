@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
-    tools:context=".Admin.AdminHome">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    android:background="@color/purple_200"
+    tools:context=".admin.AdminHome">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/AdminHome"
-        android:textSize="26sp"
-        android:layout_gravity="center"
-        />
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <!-- TextView for title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registered users"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:padding="16dp"
+            android:textColor="@android:color/white"/>
+
+        <!-- SearchView -->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search..."
+            android:iconifiedByDefault="false"
+            android:padding="16dp"
+            android:textColor="@android:color/white"
+            app:iconifiedByDefault="false" />
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/userRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </LinearLayout>
 
 </FrameLayout>

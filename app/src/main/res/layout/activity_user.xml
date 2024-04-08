@@ -16,6 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="248dp"
+            android:layout_height="355dp"
+            tools:srcCompat="@tools:sample/avatars" />
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

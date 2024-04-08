@@ -37,6 +37,9 @@ android {
     buildFeatures{
         viewBinding = true
     }
+    viewBinding{
+        enable=true
+    }
 }
 
 dependencies {
@@ -48,7 +51,11 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.play.services.location)
+    implementation(libs.firebase.database.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 }

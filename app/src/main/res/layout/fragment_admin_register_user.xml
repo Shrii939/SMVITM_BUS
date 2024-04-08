@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminRegisterUser">
+    tools:context=".admin.AdminRegisterUser">
 
 
 
@@ -146,6 +146,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.051"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneLayout"
+            tools:checked="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Switch
+            android:id="@+id/driverSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:checked="false"
+            android:minHeight="48dp"
+            android:text="@string/isdriver"
+            android:textColor="@color/black"
+            android:thumbTint="#28ADEA"
+            android:trackTint="#0A53E6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.861"
+            app:layout_constraintStart_toEndOf="@+id/adminSwitch"
             app:layout_constraintTop_toBottomOf="@+id/phoneLayout"
             tools:checked="true"
             tools:ignore="UseSwitchCompatOrMaterialXml" />

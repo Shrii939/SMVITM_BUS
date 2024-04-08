@@ -16,7 +16,7 @@
             android:name=".user.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.AdminActivity"
+            android:name=".admin.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".SignUp"
