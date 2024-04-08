@@ -1,13 +1,14 @@
 package com.example.test2
 
 
+import com.example.test2.Driver.DriverActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.test2.databinding.ActivitySignInBinding
 import com.example.test2.user.UserActivity
-import com.example.test2.Admin.AdminActivity
+import com.example.test2.admin.AdminActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,7 +18,6 @@ class SignIn : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
@@ -26,16 +26,9 @@ class SignIn : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-//        binding.textView.setOnClickListener {
-//            val intent = Intent(this, SignUp::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-
         binding.button.setOnClickListener {
             val email = binding.emailEt.text.toString()
             val pass = binding.passET.text.toString()
-
 
             if (email.isNotEmpty() && pass.isNotEmpty()) {
                 firebaseAuth.signInWithEmailAndPassword(email, pass)
@@ -50,18 +43,37 @@ class SignIn : AppCompatActivity() {
                                         if (documentSnapshot.exists()) {
                                             val isAdmin =
                                                 documentSnapshot.getBoolean("isAdmin") ?: false
+                                            val isDriver =
+                                                documentSnapshot.getBoolean("isDriver") ?: false
+
+                                            val isUser  = documentSnapshot.getBoolean("isUser") ?: false
+
                                             if (isAdmin) {
                                                 // Navigate to admin activity
-                                                val intent = Intent(this, AdminActivity::class.java)
+                                                val intent =
+                                                    Intent(this, AdminActivity::class.java)
                                                 startActivity(intent)
-
-
-                                            } else {
+                                            } else if (isDriver) {
+                                                // Navigate to driver activity
+                                                val intent =
+                                                    Intent(this, DriverActivity::class.java)
+                                                startActivity(intent)
+                                            } else{
                                                 // Navigate to user activity
-                                                val intent = Intent(this, UserActivity::class.java)
-                                                startActivity(intent)
+                                                if (isUser){
+                                                    val intent =
+                                                        Intent(this, UserActivity::class.java)
+                                                    startActivity(intent)
+                                                }else{
+                                                    Toast.makeText(
+                                                        this,
+                                                        "User document not found",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
 
                                             }
+
                                             finish() // Finish sign-in activity
                                         } else {
                                             // Document doesn't exist
@@ -83,26 +95,25 @@ class SignIn : AppCompatActivity() {
                             }
                         } else {
                             // Sign-in failed
-                            Toast.makeText(this, signInTask.exception.toString(), Toast.LENGTH_LONG)
-                                .show()
-
-                            // Navigate to sign-up activity
-//                            val intent = Intent(this, SignUp::class.java)
-//                            startActivity(intent)
-//                            finish()
+                            Toast.makeText(
+                                this,
+                                signInTask.exception.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
             } else {
-                Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Empty fields are not allowed",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-
         }
-
     }
 
     override fun onStart() {
         super.onStart()
-
 
         if (firebaseAuth.currentUser != null) {
             val currentUser = firebaseAuth.currentUser
@@ -113,8 +124,13 @@ class SignIn : AppCompatActivity() {
                     .addOnSuccessListener { documentSnapshot ->
                         if (documentSnapshot.exists()) {
                             val isAdmin = documentSnapshot.getBoolean("isAdmin") ?: false
+                            val isDriver = documentSnapshot.getBoolean("isDriver") ?: false
                             if (isAdmin) {
                                 val intent = Intent(this, AdminActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else if (isDriver) {
+                                val intent = Intent(this, DriverActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             } else {
@@ -136,14 +152,7 @@ class SignIn : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-            } else {
-                // No user signed in, redirect to sign-in activity
-//                val intent = Intent(this, SignUp::class.java)
-//                startActivity(intent)
-//                finish()
             }
-
         }
-
     }
 }

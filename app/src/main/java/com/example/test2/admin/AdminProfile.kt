@@ -1,4 +1,4 @@
-package com.example.test2.Admin
+package com.example.test2.admin
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.test2.R
 import com.example.test2.SignIn
 import com.example.test2.databinding.FragmentAdminProfileBinding
 import com.google.firebase.auth.FirebaseAuth

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Driver.DriverActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver Activity"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMERGENCY"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_background_emergency"
+            android:padding="16dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="true"/>
+
+        <Button
+            android:id="@+id/btnReportIssue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="REPORT AN ISSUE"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_background_report_issue"
+            android:padding="16dp"
+            android:layout_marginHorizontal="32dp"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+</FrameLayout>

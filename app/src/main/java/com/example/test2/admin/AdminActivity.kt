@@ -1,4 +1,4 @@
-package com.example.test2.Admin
+package com.example.test2.admin
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -9,6 +9,7 @@
     <string name="UserHome">Hello UserHome fragment</string>
     <string name="UserProfile">Hello UserProfile fragment</string>
     <string name="isadmin">isAdmin</string>
+    <string name="isdriver">isDriver</string>
 
 
 </resources>
