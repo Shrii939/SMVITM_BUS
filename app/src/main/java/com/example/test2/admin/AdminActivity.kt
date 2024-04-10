@@ -23,7 +23,7 @@ class AdminActivity : AppCompatActivity() {
                 R.id.AdminHome -> replaceFragment(AdminHome())
                 R.id.AdminProfile -> replaceFragment(AdminProfile())
                 R.id.AdminAdd -> replaceFragment(AdminRegisterUser())
-
+                R.id.MapsFragment -> replaceFragment(MapsFragment())
                 else -> {
 
                 }
