@@ -1,13 +1,13 @@
 package com.example.test2.admin
 
 import androidx.fragment.app.Fragment
-
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.test2.R
-
+import android.content.SharedPreferences
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,18 +17,17 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment() {
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private val PREFS_NAME = "map_cache"
+    private val LATITUDE_KEY = "latitude"
+    private val LONGITUDE_KEY = "longitude"
+
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(12.97194, 77.59369)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        val sydney = LatLng(
+            sharedPreferences.getFloat(LATITUDE_KEY, 12.97194f).toDouble(),
+            sharedPreferences.getFloat(LONGITUDE_KEY, 77.59369f).toDouble()
+        )
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Bangalore"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
@@ -42,7 +41,21 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveMapLocationToCache()
+    }
+
+    private fun saveMapLocationToCache() {
+        val editor = sharedPreferences.edit()
+        // Assuming sydney location as the default
+        editor.putFloat(LATITUDE_KEY, 12.97194f)
+        editor.putFloat(LONGITUDE_KEY, 77.59369f)
+        editor.apply()
     }
 }

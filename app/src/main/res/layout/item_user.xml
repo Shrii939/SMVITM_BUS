@@ -36,13 +36,13 @@
             android:textSize="16sp"/>
     </LinearLayout>
 
-    <Switch
-        android:id="@+id/active_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="deactivate"
-        android:textColor="@color/white"
-        android:layout_gravity="center_vertical"/>
+<!--    <Switch-->
+<!--        android:id="@+id/active_switch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="deactivate"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:layout_gravity="center_vertical"/>-->
 
 </LinearLayout>
 
