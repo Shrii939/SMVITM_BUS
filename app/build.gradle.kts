@@ -37,6 +37,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        dataBinding = true
     }
     viewBinding{
         enable=true
@@ -55,12 +56,16 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.firebase.database.ktx)
     implementation(libs.play.services.maps)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.google.zxing:core:3.4.0")
-    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
+    implementation(libs.play.services.vision)
+    implementation(libs.barcode.scanning)
+    implementation(libs.libraries.bom)
+    implementation(libs.firebase.analytics)
+    implementation(libs.okhttp)
+
 
 
 }
