@@ -23,6 +23,7 @@ class UserActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.UserHome -> replaceFragment(UserHome())
                 R.id.UserProfile -> replaceFragment(UserProfile())
+//                R.id.QRScanner -> replaceFragment((QRCodeScanner()))
 
                 else -> {
 
@@ -32,6 +33,7 @@ class UserActivity : AppCompatActivity() {
             true
 
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment){

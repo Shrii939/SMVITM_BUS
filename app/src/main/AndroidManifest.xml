@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test2"
         tools:targetApi="31">
+        <activity
+            android:name=".driver.DriverActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".driver.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.DriverActivity"
+            android:exported="false" />
 
+        <service
+            android:name=".firebaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="FCMNotificationService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".user.onBoardingSuccess"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -32,8 +59,8 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${API_KEY}" />
-
+            android:value="${API_KEY}" /> <!-- Register your QRScannerFragment -->
+        <!-- <activity android:name=".user.QRScannerFragment" /> -->
         <activity
             android:name=".user.UserActivity"
             android:exported="false" />
@@ -55,6 +82,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

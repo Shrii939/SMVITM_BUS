@@ -1,16 +1,22 @@
 package com.example.test2
 
 
-import com.example.test2.Driver.DriverActivity
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.test2.databinding.ActivitySignInBinding
 import com.example.test2.user.UserActivity
 import com.example.test2.admin.AdminActivity
+import com.example.test2.driver.DriverActivity1
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirestoreRegistrar
+import com.google.firebase.messaging.FirebaseMessaging
 
 class SignIn : AppCompatActivity() {
 
@@ -20,6 +26,7 @@ class SignIn : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,7 +63,7 @@ class SignIn : AppCompatActivity() {
                                             } else if (isDriver) {
                                                 // Navigate to driver activity
                                                 val intent =
-                                                    Intent(this, DriverActivity::class.java)
+                                                    Intent(this, DriverActivity1::class.java)
                                                 startActivity(intent)
                                             } else{
                                                 // Navigate to user activity
@@ -123,6 +130,9 @@ class SignIn : AppCompatActivity() {
                 firestore.collection("users").document(userID).get()
                     .addOnSuccessListener { documentSnapshot ->
                         if (documentSnapshot.exists()) {
+
+                            getFCMToken()
+
                             val isAdmin = documentSnapshot.getBoolean("isAdmin") ?: false
                             val isDriver = documentSnapshot.getBoolean("isDriver") ?: false
                             if (isAdmin) {
@@ -130,7 +140,7 @@ class SignIn : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             } else if (isDriver) {
-                                val intent = Intent(this, DriverActivity::class.java)
+                                val intent = Intent(this, DriverActivity1::class.java)
                                 startActivity(intent)
                                 finish()
                             } else {
@@ -155,4 +165,20 @@ class SignIn : AppCompatActivity() {
             }
         }
     }
+
+    private fun getFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if(task.isSuccessful()){
+                val token = task.result
+                FirebaseAuth.getInstance().uid?.let {
+                    FirebaseFirestore.getInstance().collection("users").document(
+                        it
+                    ).update("fcmToken", token)
+                };
+            }
+        }
+    }
+
+
+
 }
