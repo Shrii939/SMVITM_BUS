@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.play.services.maps)
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

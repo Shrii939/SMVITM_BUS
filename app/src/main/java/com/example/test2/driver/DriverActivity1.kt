@@ -21,7 +21,8 @@ class DriverActivity1 : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.DriverHome -> replaceFragment(DriverHome())
-
+                R.id.DriverEmergency -> replaceFragment(DriverEmergency())
+                R.id.DriverProfile -> replaceFragment(DriverProfile())
                 else  -> {
 
                 }

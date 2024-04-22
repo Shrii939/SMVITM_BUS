@@ -5,6 +5,10 @@
         android:id="@+id/DriverHome"
         android:title="Home"
         android:icon="@drawable/baseline_add_home_24" />
+    <item android:title="DriverEmergency"
+        android:id="@+id/DriverEmergency"
+        android:icon="@drawable/baseline_sos_24"
+        />
     <item
         android:id="@+id/DriverProfile"
         android:title="Profile"

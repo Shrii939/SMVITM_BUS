@@ -26,7 +26,7 @@ class SignIn : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        getFCMToken()
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -131,7 +131,7 @@ class SignIn : AppCompatActivity() {
                     .addOnSuccessListener { documentSnapshot ->
                         if (documentSnapshot.exists()) {
 
-                            getFCMToken()
+
 
                             val isAdmin = documentSnapshot.getBoolean("isAdmin") ?: false
                             val isDriver = documentSnapshot.getBoolean("isDriver") ?: false

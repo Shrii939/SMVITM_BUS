@@ -1,19 +1,29 @@
 package com.example.test2.driver
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.test2.R
+import com.example.test2.user.UserHome
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.common.net.MediaType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -22,6 +32,7 @@ import org.json.JSONObject
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.IOException
 
 
@@ -36,121 +47,104 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DriverHome : Fragment() {
-    private lateinit var emergencyNotifyButton: Button
-    private lateinit var database: DatabaseReference
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        // Check for location permission
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            getLocation()
+        } else {
+            requestLocationPermission()
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_driver_home, container, false)
-
-        emergencyNotifyButton = view.findViewById(R.id.btnEmergency)
-
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance().reference
-
-        emergencyNotifyButton.setOnClickListener {
-            sendEmergencyNotification()
-        }
-
-        return view
+        return inflater.inflate(R.layout.fragment_driver_home, container, false)
     }
 
-    private fun sendEmergencyNotification() {
-        // Retrieve FCM token
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Toast.makeText(activity, "Failed to get FCM token", Toast.LENGTH_SHORT).show()
-                return@addOnCompleteListener
-            }
-
-            // Get FCM token
-            val token = task.result
-
-            // Send notification payload to FCM server
-            val notificationData = hashMapOf(
-                "to" to token,
-                "notification" to hashMapOf(
-                    "title" to "Emergency Notification",
-                    "body" to "Emergency notification from bus driver"
-                )
-            )
-
-            // You may add more data to the notification payload as needed
-
-            // Send notification to FCM server
-            sendNotificationToFCM(notificationData)
-        }
-    }
-
-    private fun sendNotificationToFCM(notificationData: Map<String, Any>) {
-        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
-        currentUserUid?.let { uid ->
-            val userRef = FirebaseFirestore.getInstance().collection("users").document(uid)
-            userRef.get().addOnSuccessListener { userSnapshot ->
-                if (userSnapshot.exists()) {
-                    val currentUsername = userSnapshot.getString("username")
-                    val isAdmin = userSnapshot.getBoolean("isAdmin") ?: false
-                    if (isAdmin) {
-                        // Get the FCM token of the admin user
-                        FirebaseFirestore.getInstance().collection("users")
-                            .whereEqualTo("isAdmin", true)
-                            .get()
-                            .addOnSuccessListener { adminSnapshot ->
-                                for (adminDoc in adminSnapshot.documents) {
-                                    val adminUserToken = adminDoc.getString("fcmToken")
-                                    // Construct your notification payload here
-                                    val notificationPayload = JSONObject().apply {
-                                        put("to", adminUserToken) // Add recipient token
-                                        put("priority", "high") // Set priority
-                                        put("data", JSONObject().apply {
-                                            put(
-                                                "title",
-                                                "Emergency Assistance"
-                                            ) // Notification title
-                                            put(
-                                                "body",
-                                                "Emergency assistance required by $currentUsername"
-                                            ) // Notification body with username
-                                        })
-                                    }
-                                    callAPI(notificationPayload)
-                                    Toast.makeText(
-                                        activity,
-                                        "Emergency notification sent",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }.addOnFailureListener { e ->
-                                Toast.makeText(
-                                    activity,
-                                    "Failed to retrieve user information: ${e.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+    private fun getLocation() {
+        try {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        // Now you can send latitude and longitude to Firebase
+                        sendLocationToFirebase(latitude, longitude)
+                    } else {
+                        showToast("Failed to get location.")
                     }
                 }
+                .addOnFailureListener { e ->
+                    showToast("Failed to get location: ${e.message}")
+                }
+        } catch (securityException: SecurityException) {
+            showToast("Permission denied.")
+        }
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            1
+        )
+    }
+
+    private fun sendLocationToFirebase(latitude: Double, longitude: Double) {
+        // Get current user's ID (assuming you have Firebase Authentication set up)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        val username = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown"
+        val usernametoString = username.toString()
+
+        // Store the location data in Firebase Realtime Database
+        userId?.let { uid ->
+            val databaseReference = FirebaseDatabase.getInstance().getReference("Bus").child(uid)
+            val locationData = hashMapOf(
+                "username" to usernametoString,
+                "latitude" to latitude,
+                "longitude" to longitude
+            )
+            databaseReference.setValue(locationData)
+                .addOnSuccessListener {
+                    showToast("Location data saved successfully.")
+                }
+                .addOnFailureListener { e ->
+                    showToast("Failed to save location data: ${e.message}")
+                }
+        }
+    }
+
+    // Show toast message
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    // Handle permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            } else {
+                showToast("Permission denied.")
             }
         }
     }
 
-    private fun callAPI(jsonObject: JSONObject) {
-        val client = OkHttpClient()
-        val url = "https://fcm.googleapis.com/fcm/send"
-        val JSON = "application/json; charset=utf-8".toMediaType()
-        val requestBody = jsonObject.toString().toRequestBody(JSON)
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .header("Authorization", "Bearer AAAAbkBitSI:APA91bFwaPOVPDZ0RuRqIt6C4sCaltvmRwwrbLEPte5_SqHBRn5JBrNWD2VvYl94m2Lp1eKXTrkY_M7MNjeHa4e2n7iL2F0wbUFn4KMkUxcQJuP7xRDLjrPt2iOjNEYrPnxOd31CQxWA")
-            .build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            // Handle the response here if needed
-        }
+    companion object {
+        @JvmStatic
+        fun newInstance() = UserHome()
     }
-
 }
+
+
