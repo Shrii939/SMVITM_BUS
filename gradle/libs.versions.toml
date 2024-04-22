@@ -26,6 +26,7 @@ playServicesVision = "20.1.3"
 qrgenerator = "1.0.3"
 zxingAndroidEmbedded = "4.2.0"
 firebaseMessaging = "23.4.1"
+firebaseDatabase = "20.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +51,7 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 play-services-vision = { module = "com.google.android.gms:play-services-vision", version.ref = "playServicesVision" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
