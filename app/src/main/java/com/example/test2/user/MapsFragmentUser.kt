@@ -1,26 +1,28 @@
-package com.example.test2.admin
+package com.example.test2.user
 
-import android.Manifest
 import androidx.fragment.app.Fragment
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.test2.R
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
-class MapsFragment : Fragment() , OnMapReadyCallback{
+import android.Manifest
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationServices
+class MapsFragmentUser : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
