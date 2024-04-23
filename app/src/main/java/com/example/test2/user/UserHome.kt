@@ -51,13 +51,14 @@ class UserHome : Fragment(), OnMapReadyCallback {
         map = googleMap
 
         // Move camera to a default location
-        val defaultLocation = LatLng(0.0, 0.0)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 1f))
+        val defaultLocation = LatLng(13.254699617301437,  74.78506236790078)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15f))
 
         // Retrieve user locations from Firebase Realtime Database
         val usersRef = database.child("Bus")
-        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        usersRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                map.clear()
                 for (userSnapshot in dataSnapshot.children) {
                     val username = userSnapshot.child("username").value as? String ?: "Unknown"
                     // Handle username if it's null or empty
@@ -85,5 +86,4 @@ class UserHome : Fragment(), OnMapReadyCallback {
         fun newInstance() = UserHome()
     }
 }
-
 

@@ -43,7 +43,7 @@ class DriverEmergency : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_driver_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_driver_emergency, container, false)
 
         emergencyNotifyButton = view.findViewById(R.id.btnEmergency)
 
@@ -117,7 +117,7 @@ class DriverEmergency : Fragment() {
 
     private fun callAPI(jsonObject: JSONObject) {
         val client = OkHttpClient()
-        val url = "https://fcm.googleapis.com/fcm/send"
+        val url = "https://fcm.googleapis.com/v1/projects/test2-fdc60/messages:send"
         val JSON = "application/json; charset=utf-8".toMediaType()
         val requestBody = jsonObject.toString().toRequestBody(JSON)
         val request = Request.Builder()
