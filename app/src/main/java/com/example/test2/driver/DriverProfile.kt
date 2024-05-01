@@ -46,5 +46,7 @@ class DriverProfile : Fragment() {
             requireActivity().finish() // Optional: Close current activity
             Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
         }
+
+
     }
 }

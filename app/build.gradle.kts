@@ -67,6 +67,9 @@ dependencies {
     implementation(libs.libraries.bom)
     implementation(libs.firebase.analytics)
     implementation(libs.okhttp)
+    implementation(libs.core.v341)
+    implementation(libs.zxing.android.embedded)
+
 
 
 
