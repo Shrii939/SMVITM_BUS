@@ -2,6 +2,7 @@
 agp = "8.3.2"
 barcodeScanning = "17.2.0"
 core = "3.4.0"
+coreVersion = "3.4.1"
 firebaseAnalytics = "21.6.2"
 gson = "2.10.1"
 kotlin = "1.9.0"
@@ -27,11 +28,13 @@ qrgenerator = "1.0.3"
 zxingAndroidEmbedded = "4.2.0"
 firebaseMessaging = "23.4.1"
 firebaseDatabase = "20.3.1"
+zxingAndroidEmbeddedVersion = "4.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
 core = { module = "com.google.zxing:core", version.ref = "core" }
+core-v341 = { module = "com.google.zxing:core", version.ref = "coreVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -52,6 +55,7 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 play-services-vision = { module = "com.google.android.gms:play-services-vision", version.ref = "playServicesVision" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbeddedVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -23,7 +23,7 @@ class UserActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.UserHome -> replaceFragment(UserHome())
                 R.id.UserProfile -> replaceFragment(UserProfile())
-//                R.id.QRScanner -> replaceFragment((QRCodeScanner()))
+                R.id.QRScanner -> replaceFragment((QRScanner()))
                 R.id.MapsFragment -> replaceFragment(MapsFragmentUser())
 
                 else -> {
