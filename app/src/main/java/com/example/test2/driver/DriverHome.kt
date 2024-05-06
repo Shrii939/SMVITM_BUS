@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.example.test2.R
+import com.google.firebase.firestore.FirebaseFirestore
 
 private const val LOCATION_UPDATE_INTERVAL = 3 * 60 * 1000L // 3 minutes in milliseconds
 private const val LOCATION_PERMISSION_REQUEST_CODE = 101
@@ -72,24 +73,40 @@ class DriverHome : Fragment() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    val userId = FirebaseAuth.getInstance().currentUser?.uid
-                    val username = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown"
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    val firestore = FirebaseFirestore.getInstance()
 
-                    val databaseReference =
-                        FirebaseDatabase.getInstance().getReference("Bus").child(userId ?: "")
+                    // Retrieve username from Firestore using UID
+                    firestore.collection("users").document(uid!!)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            if (document != null) {
+                                val username = document.getString("username") ?: "Unknown"
 
-                    val locationData = hashMapOf(
-                        "username" to username,
-                        "latitude" to location.latitude,
-                        "longitude" to location.longitude
-                    )
+                                // Create database reference with username as key
+                                val databaseReference =
+                                    FirebaseDatabase.getInstance().getReference("Bus").child(username)
 
-                    databaseReference.setValue(locationData)
-                        .addOnSuccessListener {
-                            showToast("Location data saved successfully.")
+                                // Create location data map
+                                val locationData = hashMapOf(
+                                    "latitude" to location.latitude,
+                                    "longitude" to location.longitude
+                                )
+
+                                // Update location data under the username key
+                                databaseReference.updateChildren(locationData as Map<String, Any>)
+                                    .addOnSuccessListener {
+                                        showToast("Location data saved successfully.")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        showToast("Failed to save location data: ${e.message}")
+                                    }
+                            } else {
+                                showToast("Failed to retrieve username.")
+                            }
                         }
                         .addOnFailureListener { e ->
-                            showToast("Failed to save location data: ${e.message}")
+                            showToast("Failed to retrieve username: ${e.message}")
                         }
                 } else {
                     showToast("Failed to get location.")
