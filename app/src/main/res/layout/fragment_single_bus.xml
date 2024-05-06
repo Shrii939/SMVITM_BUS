@@ -1,0 +1,64 @@
+<!-- fragment_single_bus.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/background_light">
+
+    <!-- Bus Name -->
+    <TextView
+        android:id="@+id/busNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Bus Name" />
+
+    <!-- Start Point -->
+    <TextView
+        android:id="@+id/startPointTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="Start Point: " />
+
+    <!-- Start Time -->
+    <TextView
+        android:id="@+id/startTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="Start Time: " />
+
+    <!-- End Point -->
+    <TextView
+        android:id="@+id/endPointTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="End Point: " />
+
+    <!-- End Time -->
+    <TextView
+        android:id="@+id/endTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="End Time: " />
+
+    <!-- Stops -->
+    <TextView
+        android:id="@+id/stopsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="Stops: " />
+
+</LinearLayout>

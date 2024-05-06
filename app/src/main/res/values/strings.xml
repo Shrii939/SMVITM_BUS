@@ -10,6 +10,10 @@
     <string name="UserProfile">Hello UserProfile fragment</string>
     <string name="isadmin">isAdmin</string>
     <string name="isdriver">isDriver</string>
-
+    <string name="start_point">Start Point: %1$s</string>
+    <string name="start_time">Start Time: %1$s</string>
+    <string name="end_point">End Point: %1$s</string>
+    <string name="end_time">End Time: %1$s</string>
+    <string name="stops">Stops: %1$s</string>
 
 </resources>

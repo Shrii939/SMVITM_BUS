@@ -19,11 +19,13 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.firebase.database.*
 import com.example.test2.models.BusModel
+
+
+
 class MyBusFragment : Fragment() {
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var busListView: ListView
-
     private lateinit var adapter: BusListAdapter
 
     override fun onCreateView(
@@ -50,8 +52,9 @@ class MyBusFragment : Fragment() {
         busListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 val selectedBus = adapter.getItem(position) // Extract selected bus
-                // Handle click event, e.g., open details about the selected bus
-                // You can navigate to another fragment/activity to show bus details
+                selectedBus?.let {
+                    replaceWithSingleBusFragment(it)
+                }
             }
 
         return view
@@ -77,5 +80,20 @@ class MyBusFragment : Fragment() {
                 // Handle database error
             }
         })
+    }
+
+    private fun replaceWithSingleBusFragment(bus: BusModel) {
+        val singleBusFragment = SingleBusFragment()
+
+        // Pass the selected bus data to the SingleBusFragment
+        val bundle = Bundle()
+        bundle.putParcelable("selected_bus", bus)
+        singleBusFragment.arguments = bundle
+
+        // Replace the current fragment with SingleBusFragment
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.user_frame_layout, singleBusFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
