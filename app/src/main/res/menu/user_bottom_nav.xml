@@ -8,10 +8,10 @@
         android:id="@+id/UserHome"
         android:icon="@drawable/baseline_add_home_24"
         />
-    <item android:title="QR code"
-        android:id="@+id/QRScanner"
-        android:icon="@drawable/baseline_document_scanner_24"
-        />
+<!--    <item android:title="QR code"-->
+<!--        android:id="@+id/QRScanner"-->
+<!--        android:icon="@drawable/baseline_document_scanner_24"-->
+<!--        />-->
     <item android:title="UserProfile"
         android:id="@+id/UserProfile"
         android:icon="@drawable/baseline_account_circle_24"
