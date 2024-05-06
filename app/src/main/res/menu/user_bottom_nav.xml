@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item android:title="Bus"
+        android:id="@+id/Bus"
+        android:icon="@drawable/icon"
+        />
     <item android:title="UserHome"
         android:id="@+id/UserHome"
         android:icon="@drawable/baseline_add_home_24"

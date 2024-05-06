@@ -17,14 +17,15 @@ class UserActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(UserHome())
+        replaceFragment(MyBusFragment())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.UserHome -> replaceFragment(UserHome())
                 R.id.UserProfile -> replaceFragment(UserProfile())
-                R.id.QRScanner -> replaceFragment((QRScanner()))
+//                R.id.QRScanner -> replaceFragment((QRScanner()))
                 R.id.MapsFragment -> replaceFragment(MapsFragmentUser())
+                R.id.Bus -> replaceFragment(MyBusFragment())
 
                 else -> {
 
