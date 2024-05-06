@@ -85,7 +85,7 @@ class DriverHome : Fragment() {
 
                                 // Create database reference with username as key
                                 val databaseReference =
-                                    FirebaseDatabase.getInstance().getReference("Bus").child(username)
+                                    FirebaseDatabase.getInstance().getReference("buses").child(username)
 
                                 // Create location data map
                                 val locationData = hashMapOf(

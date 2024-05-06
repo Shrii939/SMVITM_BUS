@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.test2.R
 import com.example.test2.SignIn
+import com.example.test2.databinding.FragmentDriverProfileBinding
 import com.example.test2.databinding.FragmentUserProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -23,14 +24,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DriverProfile : Fragment() {
-    private lateinit var binding: FragmentUserProfileBinding
+    private lateinit var binding: FragmentDriverProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        binding = FragmentDriverProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
