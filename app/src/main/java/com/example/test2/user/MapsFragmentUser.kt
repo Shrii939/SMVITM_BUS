@@ -141,7 +141,7 @@ class MapsFragmentUser : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        private const val PERMISSION_REQUEST_CODE = 1001
+        const val PERMISSION_REQUEST_CODE = 1001
         private const val TAG = "location"
     }
 }

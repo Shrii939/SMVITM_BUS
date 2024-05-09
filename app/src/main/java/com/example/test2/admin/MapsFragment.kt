@@ -65,12 +65,12 @@ class MapsFragment : Fragment() , OnMapReadyCallback{
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15f))
 
         // Retrieve user locations from Firebase Realtime Database
-        val usersRef = database.child("Bus")
+        val usersRef = database.child("buses")
         usersRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 map.clear()
                 for (userSnapshot in dataSnapshot.children) {
-                    val username = userSnapshot.child("username").value as? String ?: "Unknown"
+                    val username = userSnapshot.child("name").value as? String ?: "Unknown"
                     // Handle username if it's null or empty
                     val latitude = userSnapshot.child("latitude").value as? Double
                     val longitude = userSnapshot.child("longitude").value as? Double

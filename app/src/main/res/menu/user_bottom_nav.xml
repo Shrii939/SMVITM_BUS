@@ -16,8 +16,8 @@
         android:id="@+id/UserProfile"
         android:icon="@drawable/baseline_account_circle_24"
         />
-    <item android:title="MapsFragment"
-        android:id="@+id/MapsFragment"
-        android:icon="@drawable/baseline_location_on_24"
-       />
+<!--    <item android:title="MapsFragment"-->
+<!--        android:id="@+id/MapsFragment"-->
+<!--        android:icon="@drawable/baseline_location_on_24"-->
+<!--       />-->
 </menu>

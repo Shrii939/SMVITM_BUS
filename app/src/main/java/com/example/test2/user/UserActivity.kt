@@ -24,7 +24,7 @@ class UserActivity : AppCompatActivity() {
                 R.id.UserHome -> replaceFragment(UserHome())
                 R.id.UserProfile -> replaceFragment(UserProfile())
 //                R.id.QRScanner -> replaceFragment((QRScanner()))
-                R.id.MapsFragment -> replaceFragment(MapsFragmentUser())
+//                R.id.MapsFragment -> replaceFragment(MapsFragmentUser())
                 R.id.Bus -> replaceFragment(MyBusFragment())
 
                 else -> {
